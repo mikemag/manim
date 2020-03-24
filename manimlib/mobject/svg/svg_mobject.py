@@ -73,6 +73,12 @@ class SVGMobject(VMobject):
                 self.add(*mobjects[0].submobjects)
         doc.unlink()
 
+    @staticmethod
+    def __fix_short_color(c):
+        if len(c) == 4:
+            return c[0] + c[1] + c[1] + c[2] + c[2] + c[3] + c[3]
+        return c
+
     def get_mobjects_from(self, element):
         result = []
         if not isinstance(element, minidom.Element):
@@ -86,6 +92,13 @@ class SVGMobject(VMobject):
                 self.get_mobjects_from(child)
                 for child in element.childNodes
             ])
+            # mmmfixme: would be better to pass the fill color down the recursion above so that
+            # nested colored objects would work properly. Doesn't seem to be a factor for lstlisting,
+            # so this works for now.
+            fill_color = self.__fix_short_color(element.getAttribute("fill"))
+            if fill_color:
+                for o in result:
+                    o.set_color(fill_color)
         elif element.tagName == 'path':
             result.append(self.path_string_to_mobject(
                 element.getAttribute('d')
