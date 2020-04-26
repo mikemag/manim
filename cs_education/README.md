@@ -1,5 +1,8 @@
 # CS Education Videos using Manim
 
+NOTE: I've moved the source for these to their own repo, to better keep them
+spearate from the Manim source: [https://github.com/mikemag/CS-Videos](https://github.com/mikemag/CS-Videos)
+
 This is the start of some CS education videos illustrating concepts and algorithms that might benefit from some 
 visuals and animation to better help students understand.
 
